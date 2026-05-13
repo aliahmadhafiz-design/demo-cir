@@ -355,7 +355,7 @@
         "العصر",
         "الهمزة",
         "الفيل",
-        "قريش",
+        "قریش",
         "الماعون",
         "الکوثر",
         "الكافرون",
@@ -416,6 +416,20 @@
           });
       }
 
+      function findCurrentPara(surah, ayah) {
+        const s = parseInt(surah);
+        const a = parseInt(ayah);
+        for (let p in criteriaData) {
+          const lastKey = criteriaData[p].last_verse_key.split(":");
+          const lastS = parseInt(lastKey[0]);
+          const lastA = parseInt(lastKey[1]);
+          if (s < lastS || (s === lastS && a <= lastA)) {
+            return p;
+          }
+        }
+        return "30";
+      }
+
       function generateFullReport() {
         const sIdx = parseInt(document.getElementById("startAyah").value);
         const eIdx = parseInt(document.getElementById("endAyah").value);
@@ -431,17 +445,18 @@
           return;
         }
 
-        // --- ماہانہ لائنوں کا حساب ---
-        let mLines = 0;
         const startObj = mapData.find((d) => d.index === sIdx);
         const endObj = mapData.find((d) => d.index === eIdx);
 
-        // ** خصوصی بائی پاس لاجک برائے پارہ 30 **
-        // اگر آغاز سورہ الناس (114) اور انتہا سورہ نباء (78:40) ہو
+        const [startS, startA] = startObj.verse_key.split(":");
+        const [endS, endA] = endObj.verse_key.split(":");
+
+        // --- ماہانہ لائنوں کا حساب + پارہ 30 بائی پاس ---
+        let mLines = 0;
+        // بائی پاس چیک: اگر الناس (114) سے النباء (78) تک ہو
         if (startObj.verse_key === "114:0" && endObj.verse_key === "78:40") {
           mLines = 336;
         } else {
-          // عام حساب کتاب
           const selection = mapData.filter(
             (d) => d.index >= sIdx && d.index <= eIdx,
           );
@@ -463,15 +478,8 @@
 
         const mAvg = (mLines / mPresent).toFixed(1);
 
-        // پارے کا تعین (Criteria کیلئے)
-        const endSurah = endObj.verse_key.split(":")[0];
-        let targetPara = "30";
-        for (let p in criteriaData) {
-          if (criteriaData[p].verse_mapping[endSurah]) {
-            targetPara = p;
-            break;
-          }
-        }
+        // پارے کا درست تعین
+        const targetPara = findCurrentPara(endS, endA);
 
         const mCrit = criteriaData[targetPara][course + "_para_lines"];
         let mStatus = "کمزور",
@@ -499,7 +507,7 @@
           cColor = "bg-blue-100 text-blue-800";
         }
 
-        // --- رزلٹ دکھانا ---
+        // --- ڈسپلے ---
         document.getElementById("finalReport").classList.remove("hidden");
         document.getElementById("resMLines").innerText = mLines;
         document.getElementById("resMAvg").innerText = mAvg;
@@ -515,7 +523,7 @@
 
         const name = document.getElementById("studentName").value || "طالب علم";
         document.getElementById("finalNarrative").innerHTML =
-          `<b>${name}</b> کی ماہانہ کارکردگی <b>${mStatus}</b> رہی جبکہ مجموعی طور پر کورس کا معیار <b>${cStatus}</b> پایا گیا۔`;
+          `<b>${name}</b> کی ماہانہ کارکردگی <b>${mStatus}</b> رہی جبکہ مجموعی طور پر کورس کا معیار <b>${cStatus}</b> پایا گیا۔ (پارہ نمبر: ${targetPara})`;
 
         window.scrollTo({
           top: document.body.scrollHeight,
