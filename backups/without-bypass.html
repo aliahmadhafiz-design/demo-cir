@@ -1,0 +1,517 @@
+<!doctype html>
+<html lang="ur" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>فیضان آن لائن اکیڈمی پروفیشنل کورس جائزہ ٹول</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      @font-face {
+        font-family: "Urdu";
+        src: url("urdu.woff2") format("woff2");
+        font-weight: normal;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      body {
+        font-family: "Urdu", serif;
+        background-color: #f8fafc;
+      }
+      .card {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-top: 10px solid #1e293b;
+      }
+      .input-box {
+        background: #ffffff;
+        border: 2px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 12px;
+        transition: all 0.3s;
+      }
+      .input-box:focus-within {
+        border-color: #475569;
+        box-shadow: 0 0 10px rgba(71, 85, 105, 0.1);
+      }
+      select,
+      input {
+        border: none !important;
+        outline: none !important;
+        width: 100%;
+        text-align: center;
+        font-weight: bold;
+        background: transparent;
+      }
+      .section-title {
+        border-right: 5px solid #1e293b;
+        padding-right: 12px;
+        font-weight: bold;
+        color: #1e293b;
+        margin-bottom: 15px;
+      }
+    </style>
+  </head>
+  <body class="py-10 px-4">
+    <div class="max-w-6xl mx-auto card overflow-hidden">
+      <div class="bg-slate-900 p-8 text-center text-white">
+        <h1 class="text-4xl font-bold italic mb-2">
+          فیضان آن لائن اکیڈمی کورسز جائزہ رپورٹ
+        </h1>
+        <p class="opacity-70">ماہانہ اور مجموعی کارکردگی کا پروفیشنل نظام</p>
+      </div>
+
+      <div class="p-8 space-y-10">
+        <div
+          class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-3xl"
+        >
+          <div class="input-box">
+            <label class="block text-xs text-gray-500 mb-1"
+              >طالب علم کا نام</label
+            >
+            <input type="text" id="studentName" placeholder="نام درج کریں" />
+          </div>
+          <div class="input-box">
+            <label class="block text-xs text-gray-500 mb-1">منتخب کورس</label>
+            <select id="courseType">
+              <option value="nazrah">ناظرہ (Nazrah)</option>
+              <option value="hifz">حفظ (Hifz)</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+          <div class="space-y-6">
+            <h3 class="section-title text-xl">مجموعی معلومات سیکشن</h3>
+            <div class="input-box bg-blue-50 border-blue-200">
+              <label class="block text-xs text-blue-600 mb-1"
+                >کل تعلیمی ایام (کورس کے آغاز سے اب تک)</label
+              >
+              <input
+                type="number"
+                id="totalCumulativeDays"
+                placeholder="مثلاً 95"
+              />
+            </div>
+          </div>
+
+          <div class="space-y-6">
+            <h3 class="section-title text-xl text-indigo-700 border-indigo-700">
+              ماہانہ معلومات سیکشن
+            </h3>
+            <div class="grid grid-cols-2 gap-4">
+              <div class="input-box">
+                <label class="block text-xs text-gray-500 mb-1"
+                  >ٹوٹل تعلیمی ایام</label
+                >
+                <input
+                  type="number"
+                  id="monthlyWorkingDays"
+                  value="25"
+                  oninput="calcMonthlyAttendance()"
+                />
+              </div>
+              <div class="input-box">
+                <label class="block text-xs text-gray-500 mb-1"
+                  >غیر حاضری + رخصت</label
+                >
+                <input
+                  type="number"
+                  id="monthlyAbsents"
+                  value="5"
+                  oninput="calcMonthlyAttendance()"
+                />
+              </div>
+            </div>
+            <div class="bg-indigo-900 text-white p-4 rounded-xl text-center">
+              <span class="text-xs opacity-70"
+                >ٹوٹل ایام حاضری (حساب شدہ):</span
+              >
+              <div id="monthlyPresentDays" class="text-2xl font-bold">20</div>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="bg-slate-50 p-6 rounded-3xl border-2 border-dashed border-slate-300"
+        >
+          <h3 class="text-center font-bold mb-6 text-slate-700">
+            سبق کا ریکارڈ (موجودہ مہینہ)
+          </h3>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-center">
+            <div class="space-y-4">
+              <label class="font-bold text-slate-600">ابتداء سبق</label>
+              <select id="startSurah" class="input-box w-full"></select>
+              <select id="startAyah" class="input-box w-full"></select>
+            </div>
+            <div class="space-y-4">
+              <label class="font-bold text-slate-600">انتہاء سبق</label>
+              <select id="endSurah" class="input-box w-full"></select>
+              <select id="endAyah" class="input-box w-full"></select>
+            </div>
+          </div>
+        </div>
+
+        <button
+          onclick="generateFullReport()"
+          class="w-full bg-slate-900 hover:bg-black text-white font-bold py-6 rounded-2xl text-2xl shadow-2xl transition-all flex items-center justify-center gap-3"
+        >
+          <span>تیار کریں</span>
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="h-8 w-8"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
+          </svg>
+        </button>
+
+        <div
+          id="finalReport"
+          class="hidden space-y-8 animate-fade-in pt-10 border-t-2"
+        >
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div
+              class="bg-white border-2 rounded-3xl p-6 shadow-sm overflow-hidden"
+            >
+              <div
+                class="bg-indigo-100 text-indigo-800 py-2 px-4 rounded-full text-center font-bold mb-6"
+              >
+                ماہانہ جائزہ
+              </div>
+              <div class="space-y-4">
+                <div class="flex justify-between border-b pb-2">
+                  <span>کل لائنیں:</span
+                  ><span id="resMLines" class="font-bold">0</span>
+                </div>
+                <div class="flex justify-between border-b pb-2">
+                  <span>اوسط لائنیں (روزانہ):</span
+                  ><span id="resMAvg" class="font-bold text-indigo-600">0</span>
+                </div>
+                <div
+                  class="text-center p-4 rounded-2xl mt-4"
+                  id="resMStatusBox"
+                >
+                  <div class="text-sm opacity-70">ماہانہ کیفیت:</div>
+                  <div id="resMStatus" class="text-3xl font-black italic">
+                    --
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div
+              class="bg-white border-2 rounded-3xl p-6 shadow-sm overflow-hidden"
+            >
+              <div
+                class="bg-slate-100 text-slate-800 py-2 px-4 rounded-full text-center font-bold mb-6"
+              >
+                مجموعی جائزہ
+              </div>
+              <div class="space-y-4">
+                <div class="flex justify-between border-b pb-2">
+                  <span>کل تعلیمی ایام:</span
+                  ><span id="resCDays" class="font-bold">0</span>
+                </div>
+                <div class="flex justify-between border-b pb-2">
+                  <span>مطلوبہ ایام (ممتاز):</span
+                  ><span id="resCReq" class="font-bold text-emerald-600"
+                    >0</span
+                  >
+                </div>
+                <div
+                  class="text-center p-4 rounded-2xl mt-4"
+                  id="resCStatusBox"
+                >
+                  <div class="text-sm opacity-70">مجموعی کیفیت:</div>
+                  <div id="resCStatus" class="text-3xl font-black italic">
+                    --
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="bg-slate-900 text-white p-8 rounded-3xl text-center">
+            <p id="finalNarrative" class="text-xl leading-relaxed"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      let mapData = [];
+      let criteriaData = {};
+      const surahNames = [
+        "الفاتحة",
+        "البقرة",
+        "آل عمران",
+        "النساء",
+        "المائدة",
+        "الأنعام",
+        "الأعراف",
+        "الأنفال",
+        "التوبة",
+        "يونس",
+        "هود",
+        "يوسف",
+        "الرعد",
+        "إبراهيم",
+        "الحجر",
+        "النحل",
+        "الإسراء",
+        "الكهف",
+        "مريم",
+        "طه",
+        "الأنبياء",
+        "الحج",
+        "المؤمنون",
+        "النور",
+        "الفرقان",
+        "الشعراء",
+        "النمل",
+        "القصص",
+        "العنكبوت",
+        "الروم",
+        "لقمان",
+        "السجدة",
+        "الأحزاب",
+        "سبأ",
+        "فاطر",
+        "يس",
+        "الصافات",
+        "ص",
+        "الزمر",
+        "غافر",
+        "فصلت",
+        "الشورى",
+        "الزخرف",
+        "الدخان",
+        "الجاثية",
+        "الأحقاف",
+        "محمد",
+        "الفتح",
+        "الحجرات",
+        "ق",
+        "الذاريات",
+        "الطور",
+        "النجم",
+        "القمر",
+        "الرحمن",
+        "الواقعة",
+        "الحديد",
+        "المجادلة",
+        "الحشر",
+        "الممتحنة",
+        "الصف",
+        "الجمعة",
+        "المنافقون",
+        "التغابن",
+        "الطلاق",
+        "التحريم",
+        "الملک",
+        "القلم",
+        "الحاقة",
+        "المعارج",
+        "نوح",
+        "الجن",
+        "المزمل",
+        "المدثر",
+        "القيامة",
+        "الإنسان",
+        "المرسلات",
+        "النبأ",
+        "النازعات",
+        "عبس",
+        "التكوير",
+        "الانفطار",
+        "المطففين",
+        "الانشقاق",
+        "البروج",
+        "الطارق",
+        "الأعلى",
+        "الغاشية",
+        "الفجر",
+        "البلد",
+        "الشمس",
+        "الليل",
+        "الضحى",
+        "الشرح",
+        "التين",
+        "العلق",
+        "القدر",
+        "البينة",
+        "الزلزلة",
+        "العاديات",
+        "القارعة",
+        "التكاثر",
+        "العصر",
+        "الهمزة",
+        "الفيل",
+        "قریش",
+        "الماعون",
+        "الکوثر",
+        "الكافرون",
+        "النصر",
+        "المسد",
+        "الإخلاص",
+        "الفلق",
+        "الناس",
+      ];
+
+      Promise.all([
+        fetch("academy_map.json").then((r) => r.json()),
+        fetch("para.json").then((r) => r.json()),
+      ]).then((results) => {
+        mapData = results[0];
+        criteriaData = results[1];
+        init();
+      });
+
+      function calcMonthlyAttendance() {
+        const w = document.getElementById("monthlyWorkingDays").value || 0;
+        const a = document.getElementById("monthlyAbsents").value || 0;
+        const p = w - a;
+        document.getElementById("monthlyPresentDays").innerText = p > 0 ? p : 0;
+      }
+
+      function init() {
+        const ss = document.getElementById("startSurah");
+        const es = document.getElementById("endSurah");
+        const uniqueS = [
+          ...new Set(mapData.map((d) => parseInt(d.verse_key.split(":")[0]))),
+        ];
+        uniqueS.forEach((n) => {
+          const o = new Option(`${n}. ${surahNames[n - 1]}`, n);
+          ss.add(o.cloneNode(true));
+          es.add(o.cloneNode(true));
+        });
+        ss.onchange = () => loadAyahs("start");
+        es.onchange = () => loadAyahs("end");
+        loadAyahs("start");
+        loadAyahs("end");
+      }
+
+      function loadAyahs(t) {
+        const s = document.getElementById(`${t}Surah`).value;
+        const sel = document.getElementById(`${t}Ayah`);
+        sel.innerHTML = "";
+        mapData
+          .filter((d) => d.verse_key.startsWith(`${s}:`))
+          .forEach((d) => {
+            let txt =
+              d.type === "name"
+                ? "ہیڈر"
+                : d.type === "basmala"
+                  ? "بسم اللہ"
+                  : `آیت ${d.verse_key.split(":")[1]}`;
+            sel.add(new Option(txt, d.index));
+          });
+      }
+
+      function generateFullReport() {
+        const sIdx = parseInt(document.getElementById("startAyah").value);
+        const eIdx = parseInt(document.getElementById("endAyah").value);
+        const mPresent = parseInt(
+          document.getElementById("monthlyPresentDays").innerText,
+        );
+        const cDays =
+          parseInt(document.getElementById("totalCumulativeDays").value) || 0;
+        const course = document.getElementById("courseType").value;
+
+        if (mPresent <= 0) {
+          alert("ایام حاضری کم از کم 1 ہونی چاہیے!");
+          return;
+        }
+
+        // --- 1. ماہانہ حساب ---
+        const selection = mapData.filter(
+          (d) => d.index >= sIdx && d.index <= eIdx,
+        );
+        let lineMap = {};
+        selection.forEach((item) => {
+          if (item.sp === item.ep) {
+            for (let l = item.sl; l <= item.el; l++)
+              lineMap[`${item.sp}-${l}`] = true;
+          } else {
+            let maxL = item.sp <= 2 ? 8 : 16;
+            for (let l = item.sl; l <= maxL; l++)
+              lineMap[`${item.sp}-${l}`] = true;
+            for (let l = 1; l <= item.el; l++)
+              lineMap[`${item.ep}-${l}`] = true;
+          }
+        });
+        const mLines = Object.keys(lineMap).length;
+        const mAvg = (mLines / mPresent).toFixed(1);
+
+        // پارے کا تعین (Criteria کیلئے)
+        const endItem = mapData.find((d) => d.index === eIdx);
+        const endSurah = endItem.verse_key.split(":")[0];
+        let targetPara = "30";
+        for (let p in criteriaData) {
+          if (criteriaData[p].verse_mapping[endSurah]) {
+            targetPara = p;
+            break;
+          }
+        }
+
+        const mCrit = criteriaData[targetPara][course + "_para_lines"];
+        let mStatus = "کمزور",
+          mColor = "bg-red-100 text-red-800";
+        if (mAvg >= mCrit.mumtaz) {
+          mStatus = "ممتاز";
+          mColor = "bg-emerald-100 text-emerald-800";
+        } else if (mAvg >= mCrit.behter) {
+          mStatus = "بہتر";
+          mColor = "bg-blue-100 text-blue-800";
+        }
+
+        // --- 2. مجموعی حساب ---
+        const cCrit = criteriaData[targetPara];
+        const behtarMax = cCrit[course + "_total-behtar_days"];
+        const mumtazMax = cCrit[course + "_total-mumtaz_days"];
+
+        let cStatus = "کمزور",
+          cColor = "bg-red-100 text-red-800";
+        if (cDays <= mumtazMax) {
+          cStatus = "ممتاز";
+          cColor = "bg-emerald-100 text-emerald-800";
+        } else if (cDays <= behtarMax) {
+          cStatus = "بہتر";
+          cColor = "bg-blue-100 text-blue-800";
+        }
+
+        // --- 3. ڈسپلے ---
+        document.getElementById("finalReport").classList.remove("hidden");
+        document.getElementById("resMLines").innerText = mLines;
+        document.getElementById("resMAvg").innerText = mAvg;
+        document.getElementById("resMStatus").innerText = mStatus;
+        document.getElementById("resMStatusBox").className =
+          `text-center p-4 rounded-2xl mt-4 ${mColor}`;
+
+        document.getElementById("resCDays").innerText = cDays;
+        document.getElementById("resCReq").innerText = mumtazMax;
+        document.getElementById("resCStatus").innerText = cStatus;
+        document.getElementById("resCStatusBox").className =
+          `text-center p-4 rounded-2xl mt-4 ${cColor}`;
+
+        const name = document.getElementById("studentName").value || "طالب علم";
+        document.getElementById("finalNarrative").innerHTML =
+          `<b>${name}</b> کی ماہانہ کارکردگی <b>${mStatus}</b> رہی جبکہ مجموعی طور پر کورس کا معیار <b>${cStatus}</b> پایا گیا۔`;
+
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+      }
+    </script>
+  </body>
+</html>
