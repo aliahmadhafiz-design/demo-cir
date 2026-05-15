@@ -1,535 +1,346 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="ur" dir="rtl">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>فیضان آن لائن اکیڈمی پروفیشنل کورس جائزہ ٹول</title>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>فیضان آن لائن اکیڈمی | کورس جائزہ ٹول</title>
+
+    <!-- Meta Tags for SEO -->
+    <meta name="description" content="فیضان آن لائن اکیڈمی کا پروفیشنل کورس جائزہ ٹول - طلبہ کی کارکردگی کا جدید نظام">
+
+    <!-- CSS Dependencies -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      @font-face {
-        font-family: "Urdu";
-        src: url("urdu.woff2") format("woff2");
-        font-weight: normal;
-        font-style: normal;
-        font-display: swap;
-      }
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <link rel="stylesheet" href="index.css">
 
-      body {
-        font-family: "Urdu", serif;
-        background-color: #f8fafc;
-      }
-      .card {
-        background: white;
-        border-radius: 24px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-top: 10px solid #1e293b;
-      }
-      .input-box {
-        background: #ffffff;
-        border: 2px solid #e2e8f0;
-        border-radius: 12px;
-        padding: 12px;
-        transition: all 0.3s;
-      }
-      .input-box:focus-within {
-        border-color: #475569;
-        box-shadow: 0 0 10px rgba(71, 85, 105, 0.1);
-      }
-      select,
-      input {
-        border: none !important;
-        outline: none !important;
-        width: 100%;
-        text-align: center;
-        font-weight: bold;
-        background: transparent;
-      }
-      .section-title {
-        border-right: 5px solid #1e293b;
-        padding-right: 12px;
-        font-weight: bold;
-        color: #1e293b;
-        margin-bottom: 15px;
-      }
-    </style>
-  </head>
-  <body class="py-10 px-4">
-    <div class="max-w-6xl mx-auto card overflow-hidden">
-      <div class="bg-slate-900 p-8 text-center text-white">
-        <h1 class="text-4xl font-bold italic mb-2">
-          فیضان آن لائن اکیڈمی کورسز جائزہ رپورٹ
-        </h1>
-        <p class="opacity-70">ماہانہ اور مجموعی کارکردگی کا پروفیشنل نظام</p>
-      </div>
+    <!-- Scripts -->
+    <script src="app.js" defer></script>
+</head>
 
-      <div class="p-8 space-y-10">
-        <div
-          class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-3xl"
-        >
-          <div class="input-box">
-            <label class="block text-xs text-gray-500 mb-1"
-              >طالب علم کا نام</label
-            >
-            <input type="text" id="studentName" placeholder="نام درج کریں" />
-          </div>
-          <div class="input-box">
-            <label class="block text-xs text-gray-500 mb-1">منتخب کورس</label>
-            <select id="courseType">
-              <option value="nazrah">ناظرہ (Nazrah)</option>
-              <option value="hifz">حفظ (Hifz)</option>
-            </select>
-          </div>
+<body>
+    <div class="bg-mesh"></div>
+
+    <nav>
+        <div class="nav-container">
+            <a href="#" class="nav-logo" onclick="switchView('home')">
+                <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="45" fill="#065F46" />
+                    <path d="M50 25L70 45H30L50 25Z" fill="#D97706" />
+                    <rect x="35" y="45" width="30" height="30" fill="white" />
+                    <path d="M40 50H60M40 60H60M40 70H60" stroke="#065F46" stroke-width="2" />
+                </svg>
+                <span class="urdu-text">فیضان آن لائن اکیڈمی</span>
+            </a>
+            <div class="nav-links">
+                <a class="nav-link active" onclick="switchView('home')">انفرادی جائزہ</a>
+                <a class="nav-link" onclick="switchView('bulk')">مجموعی جائزہ </a>
+            </div>
         </div>
+    </nav>
 
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-          <div class="space-y-6">
-            <h3 class="section-title text-xl">مجموعی معلومات سیکشن</h3>
-            <div class="input-box bg-blue-50 border-blue-200">
-              <label class="block text-xs text-blue-600 mb-1"
-                >کل تعلیمی ایام (کورس کے آغاز سے اب تک)</label
-              >
-              <input
-                type="number"
-                id="totalCumulativeDays"
-                placeholder="مثلاً 95"
-              />
-            </div>
-          </div>
+    <main class="max-w-6xl mx-auto py-12 px-4">
 
-          <div class="space-y-6">
-            <h3 class="section-title text-xl text-indigo-700 border-indigo-700">
-              ماہانہ معلومات سیکشن
-            </h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div class="input-box">
-                <label class="block text-xs text-gray-500 mb-1"
-                  >ٹوٹل تعلیمی ایام</label
-                >
-                <input
-                  type="number"
-                  id="monthlyWorkingDays"
-                  value="25"
-                  oninput="calcMonthlyAttendance()"
-                />
-              </div>
-              <div class="input-box">
-                <label class="block text-xs text-gray-500 mb-1"
-                  >غیر حاضری + رخصت</label
-                >
-                <input
-                  type="number"
-                  id="monthlyAbsents"
-                  value="5"
-                  oninput="calcMonthlyAttendance()"
-                />
-              </div>
-            </div>
-            <div class="bg-indigo-900 text-white p-4 rounded-xl text-center">
-              <span class="text-xs opacity-70"
-                >ٹوٹل ایام حاضری (حساب شدہ):</span
-              >
-              <div id="monthlyPresentDays" class="text-2xl font-bold">20</div>
-            </div>
-          </div>
-        </div>
-
-        <div
-          class="bg-slate-50 p-6 rounded-3xl border-2 border-dashed border-slate-300"
-        >
-          <h3 class="text-center font-bold mb-6 text-slate-700">
-            سبق کا ریکارڈ (موجودہ مہینہ)
-          </h3>
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-center">
-            <div class="space-y-4">
-              <label class="font-bold text-slate-600">ابتداء سبق</label>
-              <select id="startSurah" class="input-box w-full"></select>
-              <select id="startAyah" class="input-box w-full"></select>
-            </div>
-            <div class="space-y-4">
-              <label class="font-bold text-slate-600">انتہاء سبق</label>
-              <select id="endSurah" class="input-box w-full"></select>
-              <select id="endAyah" class="input-box w-full"></select>
-            </div>
-          </div>
-        </div>
-
-        <button
-          onclick="generateFullReport()"
-          class="w-full bg-slate-900 hover:bg-black text-white font-bold py-6 rounded-2xl text-2xl shadow-2xl transition-all flex items-center justify-center gap-3"
-        >
-          <span>تیار کریں</span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            class="h-8 w-8"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
-              d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        </button>
-
-        <div
-          id="finalReport"
-          class="hidden space-y-8 animate-fade-in pt-10 border-t-2"
-        >
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div
-              class="bg-white border-2 rounded-3xl p-6 shadow-sm overflow-hidden"
-            >
-              <div
-                class="bg-indigo-100 text-indigo-800 py-2 px-4 rounded-full text-center font-bold mb-6"
-              >
-                ماہانہ جائزہ
-              </div>
-              <div class="space-y-4">
-                <div class="flex justify-between border-b pb-2">
-                  <span>کل لائنیں:</span
-                  ><span id="resMLines" class="font-bold">0</span>
+        <!-- Individual Evaluation View (Default) -->
+        <div id="home-view" class="animate-fade-in">
+            <div class="card">
+                <div class="card-header">
+                    <h1 class="text-4xl font-bold urdu-text mb-2">انفرادی کورسز جائزہ رپورٹ</h1>
+                    <p class="opacity-80">ماہانہ اور مجموعی کارکردگی کا پروفیشنل نظام</p>
                 </div>
-                <div class="flex justify-between border-b pb-2">
-                  <span>اوسط لائنیں (روزانہ):</span
-                  ><span id="resMAvg" class="font-bold text-indigo-600">0</span>
+
+                <div class="p-8 space-y-10">
+                    <!-- Student Info -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 bg-slate-50 p-6 rounded-3xl">
+                        <div class="input-group">
+                            <label class="input-label">طالب علم کا نام</label>
+                            <input type="text" id="studentName" placeholder="نام درج کریں"
+                                class="urdu-text text-center">
+                        </div>
+                        <div class="input-group">
+                            <label class="input-label"> کورس منتخب کریں</label>
+                            <select id="courseType" class="urdu-text text-center">
+                                <option value="nazrah">ناظرہ (Nazrah)</option>
+                                <option value="hifz">حفظ (Hifz)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Attendance Sections -->
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                        <div class="space-y-6">
+                            <h3 class="section-title urdu-text">مجموعی معلومات</h3>
+                            <div class="input-group" style="background: rgba(6, 95, 70, 0.05);">
+                                <label class="input-label" style="color: var(--primary);">کل تعلیمی ایام (کورس کے آغاز
+                                    سے اب تک)</label>
+                                <input type="number" id="totalCumulativeDays" placeholder="مثلاً 95"
+                                    class="text-center">
+                            </div>
+                        </div>
+
+                        <div class="space-y-6">
+                            <h3 class="section-title urdu-text" style="color: var(--secondary);">ماہانہ معلومات</h3>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="input-group">
+                                    <label class="input-label">ٹوٹل تعلیمی ایام</label>
+                                    <input type="number" id="monthlyWorkingDays" value="25"
+                                        oninput="calcMonthlyAttendance()" class="text-center">
+                                </div>
+                                <div class="input-group">
+                                    <label class="input-label">غیر حاضری + رخصت</label>
+                                    <input type="number" id="monthlyAbsents" value="5" oninput="calcMonthlyAttendance()"
+                                        class="text-center">
+                                </div>
+                            </div>
+                            <div
+                                class="bg-slate-900 text-white p-4 rounded-2xl text-center shadow-lg transform transition hover:scale-105">
+                                <span class="text-xs opacity-70">ٹوٹل ایام حاضری (حساب شدہ):</span>
+                                <div id="monthlyPresentDays" class="text-3xl font-bold">20</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lesson Record -->
+                    <div class="bg-slate-50 p-8 rounded-3xl border-2 border-dashed border-slate-200">
+                        <h3 class="text-center font-bold mb-8 text-slate-700 urdu-text text-xl">سبق کا ریکارڈ (موجودہ
+                            مہینہ)</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-10 text-center">
+                            <div class="space-y-4">
+                                <label class="font-bold text-slate-600 urdu-text">ابتداء سبق</label>
+                                <div class="input-group"><select id="startSurah" class="urdu-text"></select></div>
+                                <div class="input-group"><select id="startAyah" class="urdu-text"></select></div>
+                            </div>
+                            <div class="space-y-4">
+                                <label class="font-bold text-slate-600 urdu-text">انتہاء سبق</label>
+                                <div class="input-group"><select id="endSurah" class="urdu-text"></select></div>
+                                <div class="input-group"><select id="endAyah" class="urdu-text"></select></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button onclick="generateFullReport()" class="btn-primary urdu-text">
+                        <span>رپورٹ تیار کریں</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </button>
+
+                    <!-- Result Section -->
+                    <div id="finalReport" class="hidden space-y-8 pt-10 border-t-2 animate-fade-in">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div class="bg-white border-2 rounded-3xl p-6 shadow-sm">
+                                <div
+                                    class="bg-emerald-50 text-emerald-800 py-3 px-6 rounded-full text-center font-bold mb-6 urdu-text">
+                                    ماہانہ جائزہ</div>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between border-b pb-2">
+                                        <span class="urdu-text">کل لائنیں:</span>
+                                        <span id="resMLines" class="font-bold">0</span>
+                                    </div>
+                                    <div class="flex justify-between border-b pb-2">
+                                        <span class="urdu-text">اوسط لائنیں (روزانہ):</span>
+                                        <span id="resMAvg" class="font-bold text-emerald-600">0</span>
+                                    </div>
+                                    <div class="text-center p-6 rounded-2xl mt-4 transition-all" id="resMStatusBox">
+                                        <div class="text-sm opacity-70 urdu-text">ماہانہ کیفیت:</div>
+                                        <div id="resMStatus" class="text-4xl font-black italic urdu-text">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-white border-2 rounded-3xl p-6 shadow-sm">
+                                <div
+                                    class="bg-amber-50 text-amber-800 py-3 px-6 rounded-full text-center font-bold mb-6 urdu-text">
+                                    مجموعی جائزہ</div>
+                                <div class="space-y-4">
+                                    <div class="flex justify-between border-b pb-2">
+                                        <span class="urdu-text">کل تعلیمی ایام:</span>
+                                        <span id="resCDays" class="font-bold">0</span>
+                                    </div>
+                                    <div class="flex justify-between border-b pb-2">
+                                        <span class="urdu-text">مطلوبہ ایام (ممتاز):</span>
+                                        <span id="resCReq" class="font-bold text-amber-600">0</span>
+                                    </div>
+                                    <div class="text-center p-6 rounded-2xl mt-4 transition-all" id="resCStatusBox">
+                                        <div class="text-sm opacity-70 urdu-text">مجموعی کیفیت:</div>
+                                        <div id="resCStatus" class="text-4xl font-black italic urdu-text">--</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- New Download Button Placement -->
+                        <div class="flex justify-center mt-6">
+                            <button onclick="downloadIndividualReport()" class="btn-primary urdu-text w-auto px-10"
+                                style="background: var(--primary-dark);">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" class="ml-2">
+                                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                                    <polyline points="7 10 12 15 17 10"></polyline>
+                                    <line x1="12" y1="15" x2="12" y2="3"></line>
+                                </svg>
+                                رپورٹ ڈاؤن لوڈ کریں
+                            </button>
+                        </div>
+                    </div>
+
                 </div>
+
+                <div class="bg-slate-900 text-white p-10 rounded-3xl text-center shadow-2xl">
+                    <p id="finalNarrative" class="text-2xl leading-relaxed urdu-text"></p>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Bulk Evaluation View (Hidden by default) -->
+        <div id="bulk-view" class="hidden animate-fade-in">
+            <div class="card">
+                <div class="card-header" style="background: linear-gradient(135deg, #1e1b4b, #312e81);">
+                    <h1 class="text-4xl font-bold urdu-text mb-2">مجموعی کورس جائزہ رپورٹ</h1>
+                    <p class="opacity-80">JSON ڈیٹا پیسٹ کریں اور ایک ساتھ تمام رپورٹس تیار کریں</p>
+                </div>
+
+                <div class="p-8 space-y-8">
+                    <div class="bg-white p-6 rounded-3xl border-2 border-slate-100 shadow-inner">
+                        <label class="block font-bold text-slate-700 mb-4 urdu-text text-lg">طلبہ کا JSON ڈیٹا یہاں پیسٹ
+                            کریں:</label>
+                        <textarea id="jsonDataInput"
+                            class="w-full h-64 p-6 border-2 border-slate-100 rounded-2xl font-mono text-sm focus:border-indigo-500 outline-none bg-slate-50 transition-all"
+                            placeholder='[ { "cr": "347801", ... }, ... ]'></textarea>
+
+                        <div class="flex flex-col md:flex-row gap-4 mt-6">
+                            <button onclick="processBulkData()" class="btn-primary urdu-text"
+                                style="background: #312e81;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                                </svg>
+                                رپورٹ تیار کریں
+                            </button>
+                            <button onclick="copyTableToClipboard()" id="copyBtn" class="hidden btn-primary urdu-text"
+                                style="background: #059669;">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                </svg>
+                                ٹیبل کاپی کریں (برائے Excel)
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="resultSection" class="hidden">
+                        <div class="table-wrapper">
+                            <table id="inspectionTable">
+                                <thead>
+                                    <tr class="urdu-text">
+                                        <th>CR نمبر</th>
+                                        <th>کورس</th>
+                                        <th>پارہ</th>
+                                        <th>ماہانہ لائنیں</th>
+                                        <th>روزانہ اوسط</th>
+                                        <th>ماہانہ کیفیت</th>
+                                        <th>مجموعی ایام</th>
+                                        <th>مطلوبہ (ممتاز)</th>
+                                        <th>مجموعی کیفیت</th>
+                                        <th>ڈاؤن لوڈ</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tableBody" class="urdu-text"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer class="py-12 text-center text-slate-500">
+        <p class="urdu-text"> فیضان آن لائن اکیڈمی ، کورسز جائزہ ٹول | علی احمد عطاری </p>
+    </footer>
+
+    <!-- Hidden Certificate Template for Image Generation -->
+    <div id="cert-template" class="hidden"
+        style="width: 800px; padding: 40px; background: white; position: fixed; left: -10000px;">
+        <div class="cert-border" style="border: 15px solid #065f46; padding: 20px; position: relative;">
+            <div class="cert-inner-border" style="border: 2px solid #d97706; padding: 30px; text-align: center;">
+                <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                    <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+                        <circle cx="50" cy="50" r="45" fill="#065F46" />
+                        <path d="M50 25L70 45H30L50 25Z" fill="#D97706" />
+                        <rect x="35" y="45" width="30" height="30" fill="white" />
+                        <path d="M40 50H60M40 60H60M40 70H60" stroke="#065F46" stroke-width="2" />
+                    </svg>
+                </div>
+                <h1 class="urdu-text" style="color: #065f46; font-size: 3rem; margin-bottom: 5px;">فیضان آن لائن اکیڈمی
+                </h1>
+                <h2 class="urdu-text" style="color: #d97706; font-size: 1.8rem; margin-bottom: 30px;">کورس جائزہ رپورٹ
+                    کارڈ</h2>
+
                 <div
-                  class="text-center p-4 rounded-2xl mt-4"
-                  id="resMStatusBox"
-                >
-                  <div class="text-sm opacity-70">ماہانہ کیفیت:</div>
-                  <div id="resMStatus" class="text-3xl font-black italic">
-                    --
-                  </div>
+                    style="background: #065f46; color: white; padding: 10px; border-radius: 10px; margin-bottom: 30px; display: flex; justify-content: center; gap: 40px; font-weight: bold;">
+                    <span class="urdu-text">رپورٹ برائے مہینہ: <span id="cert-month">--</span></span>
+                    <span class="urdu-text">تاریخ اجراء: <span id="cert-date">--</span></span>
                 </div>
-              </div>
-            </div>
 
-            <div
-              class="bg-white border-2 rounded-3xl p-6 shadow-sm overflow-hidden"
-            >
-              <div
-                class="bg-slate-100 text-slate-800 py-2 px-4 rounded-full text-center font-bold mb-6"
-              >
-                مجموعی جائزہ
-              </div>
-              <div class="space-y-4">
-                <div class="flex justify-between border-b pb-2">
-                  <span>کل تعلیمی ایام:</span
-                  ><span id="resCDays" class="font-bold">0</span>
-                </div>
-                <div class="flex justify-between border-b pb-2">
-                  <span>مطلوبہ ایام (ممتاز):</span
-                  ><span id="resCReq" class="font-bold text-emerald-600"
-                    >0</span
-                  >
-                </div>
                 <div
-                  class="text-center p-4 rounded-2xl mt-4"
-                  id="resCStatusBox"
-                >
-                  <div class="text-sm opacity-70">مجموعی کیفیت:</div>
-                  <div id="resCStatus" class="text-3xl font-black italic">
-                    --
-                  </div>
+                    style="display: flex; justify-content: space-between; margin-bottom: 30px; border-bottom: 2px solid #f1f5f9; padding-bottom: 20px;">
+                    <div style="text-align: right;">
+                        <p class="urdu-text" style="color: #64748b;">طالب علم کا نام:</p>
+                        <p id="cert-name" class="urdu-text"
+                            style="font-size: 1.5rem; font-weight: bold; color: #1e293b;">--</p>
+                    </div>
+                    <div style="text-align: left;">
+                        <p class="urdu-text" style="color: #64748b;">کورس:</p>
+                        <p id="cert-course" class="urdu-text"
+                            style="font-size: 1.5rem; font-weight: bold; color: #1e293b;">--</p>
+                    </div>
                 </div>
-              </div>
-            </div>
-          </div>
 
-          <div class="bg-slate-900 text-white p-8 rounded-3xl text-center">
-            <p id="finalNarrative" class="text-xl leading-relaxed"></p>
-          </div>
+                <div style="display: grid; grid-template-cols: 1fr 1fr; gap: 30px; margin-bottom: 40px;">
+                    <div style="background: #f8fafc; padding: 20px; border-radius: 20px;">
+                        <h4 class="urdu-text" style="color: #065f46; margin-bottom: 15px;">ماہانہ جائزہ</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span class="urdu-text">روزانہ اوسط:</span>
+                            <span id="cert-m-avg" style="font-weight: bold;">--</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="urdu-text">کیفیت:</span>
+                            <span id="cert-m-status" class="urdu-text"
+                                style="font-weight: bold; color: #065f46;">--</span>
+                        </div>
+                    </div>
+                    <div style="background: #fffbeb; padding: 20px; border-radius: 20px;">
+                        <h4 class="urdu-text" style="color: #d97706; margin-bottom: 15px;">مجموعی جائزہ</h4>
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span class="urdu-text">تعلیمی ایام:</span>
+                            <span id="cert-c-days" style="font-weight: bold;">--</span>
+                        </div>
+                        <div style="display: flex; justify-content: space-between;">
+                            <span class="urdu-text">کیفیت:</span>
+                            <span id="cert-c-status" class="urdu-text"
+                                style="font-weight: bold; color: #d97706;">--</span>
+                        </div>
+                    </div>
+                </div>
+
+                <p id="cert-narrative" class="urdu-text"
+                    style="font-size: 1.25rem; line-height: 1.8; color: #1e293b; margin-bottom: 40px;"></p>
+
+                <div style="display: flex; justify-content: center; align-items: flex-end; margin-top: 20px;">
+                    <div style="text-align: center; border-top: 2px solid #065f46; padding-top: 10px; width: 300px;">
+                        <p class="urdu-text" style="font-size: 1.2rem; color: #065f46; font-weight: bold;">فیضان آن لائن
+                            اکیڈمی - مدرسۃ المدینہ</p>
+                    </div>
+                </div>
+            </div>
         </div>
-      </div>
     </div>
-    <script>
-      let mapData = [];
-      let criteriaData = {};
-      const surahNames = [
-        "الفاتحة",
-        "البقرة",
-        "آل عمران",
-        "النساء",
-        "المائدة",
-        "الأنعام",
-        "الأعراف",
-        "الأنفال",
-        "التوبة",
-        "يونس",
-        "هود",
-        "يوسف",
-        "الرعد",
-        "إبراهيم",
-        "الحجر",
-        "النحل",
-        "الإسراء",
-        "الكهف",
-        "مريم",
-        "طه",
-        "الأنبياء",
-        "الحج",
-        "المؤمنون",
-        "النور",
-        "الفرقان",
-        "الشعراء",
-        "النمل",
-        "القصص",
-        "العنكبوت",
-        "الروم",
-        "لقمان",
-        "السجدة",
-        "الأحزاب",
-        "سبأ",
-        "فاطر",
-        "يس",
-        "الصافات",
-        "ص",
-        "الزمر",
-        "غافر",
-        "فصلت",
-        "الشورى",
-        "الزخرف",
-        "الدخان",
-        "الجاثية",
-        "الأحقاف",
-        "محمد",
-        "الفتح",
-        "الحجرات",
-        "ق",
-        "الذاريات",
-        "الطور",
-        "النجم",
-        "القمر",
-        "الرحمن",
-        "الواقعة",
-        "الحديد",
-        "المجادلة",
-        "الحشر",
-        "الممتحنة",
-        "الصف",
-        "الجمعة",
-        "المنافقون",
-        "التغابن",
-        "الطلاق",
-        "التحريم",
-        "الملک",
-        "القلم",
-        "الحاقة",
-        "المعارج",
-        "نوح",
-        "الجن",
-        "المزمل",
-        "المدثر",
-        "القيامة",
-        "الإنسان",
-        "المرسلات",
-        "النبأ",
-        "النازعات",
-        "عبس",
-        "التكوير",
-        "الانفطار",
-        "المطففين",
-        "الانشقاق",
-        "البروج",
-        "الطارق",
-        "الأعلى",
-        "الغاشية",
-        "الفجر",
-        "البلد",
-        "الشمس",
-        "الليل",
-        "الضحى",
-        "الشرح",
-        "التين",
-        "العلق",
-        "القدر",
-        "البينة",
-        "الزلزلة",
-        "العاديات",
-        "القارعة",
-        "التكاثر",
-        "العصر",
-        "الهمزة",
-        "الفيل",
-        "قریش",
-        "الماعون",
-        "الکوثر",
-        "الكافرون",
-        "النصر",
-        "المسد",
-        "الإخلاص",
-        "الفلق",
-        "الناس",
-      ];
+</body>
 
-      Promise.all([
-        fetch("academy_map.json").then((r) => r.json()),
-        fetch("para.json").then((r) => r.json()),
-      ]).then((results) => {
-        mapData = results[0];
-        criteriaData = results[1];
-        init();
-      });
-
-      function calcMonthlyAttendance() {
-        const w = document.getElementById("monthlyWorkingDays").value || 0;
-        const a = document.getElementById("monthlyAbsents").value || 0;
-        const p = w - a;
-        document.getElementById("monthlyPresentDays").innerText = p > 0 ? p : 0;
-      }
-
-      function init() {
-        const ss = document.getElementById("startSurah");
-        const es = document.getElementById("endSurah");
-        const uniqueS = [
-          ...new Set(mapData.map((d) => parseInt(d.verse_key.split(":")[0]))),
-        ];
-        uniqueS.forEach((n) => {
-          const o = new Option(`${n}. ${surahNames[n - 1]}`, n);
-          ss.add(o.cloneNode(true));
-          es.add(o.cloneNode(true));
-        });
-        ss.onchange = () => loadAyahs("start");
-        es.onchange = () => loadAyahs("end");
-        loadAyahs("start");
-        loadAyahs("end");
-      }
-
-      function loadAyahs(t) {
-        const s = document.getElementById(`${t}Surah`).value;
-        const sel = document.getElementById(`${t}Ayah`);
-        sel.innerHTML = "";
-        mapData
-          .filter((d) => d.verse_key.startsWith(`${s}:`))
-          .forEach((d) => {
-            let txt =
-              d.type === "name"
-                ? "ہیڈر"
-                : d.type === "basmala"
-                  ? "بسم اللہ"
-                  : `آیت ${d.verse_key.split(":")[1]}`;
-            sel.add(new Option(txt, d.index));
-          });
-      }
-
-      function findCurrentPara(surah, ayah) {
-        const s = parseInt(surah);
-        const a = parseInt(ayah);
-        for (let p in criteriaData) {
-          const lastKey = criteriaData[p].last_verse_key.split(":");
-          const lastS = parseInt(lastKey[0]);
-          const lastA = parseInt(lastKey[1]);
-          if (s < lastS || (s === lastS && a <= lastA)) {
-            return p;
-          }
-        }
-        return "30";
-      }
-
-      function generateFullReport() {
-        const sIdx = parseInt(document.getElementById("startAyah").value);
-        const eIdx = parseInt(document.getElementById("endAyah").value);
-        const mPresent = parseInt(
-          document.getElementById("monthlyPresentDays").innerText,
-        );
-        const cDays =
-          parseInt(document.getElementById("totalCumulativeDays").value) || 0;
-        const course = document.getElementById("courseType").value;
-
-        if (mPresent <= 0) {
-          alert("ایام حاضری کم از کم 1 ہونی چاہیے!");
-          return;
-        }
-
-        const startObj = mapData.find((d) => d.index === sIdx);
-        const endObj = mapData.find((d) => d.index === eIdx);
-
-        const [startS, startA] = startObj.verse_key.split(":");
-        const [endS, endA] = endObj.verse_key.split(":");
-
-        // --- ماہانہ لائنوں کا حساب + پارہ 30 بائی پاس ---
-        let mLines = 0;
-        // بائی پاس چیک: اگر الناس (114) سے النباء (78) تک ہو
-        if (startObj.verse_key === "114:0" && endObj.verse_key === "78:40") {
-          mLines = 336;
-        } else {
-          const selection = mapData.filter(
-            (d) => d.index >= sIdx && d.index <= eIdx,
-          );
-          let lineMap = {};
-          selection.forEach((item) => {
-            if (item.sp === item.ep) {
-              for (let l = item.sl; l <= item.el; l++)
-                lineMap[`${item.sp}-${l}`] = true;
-            } else {
-              let maxL = item.sp <= 2 ? 8 : 16;
-              for (let l = item.sl; l <= maxL; l++)
-                lineMap[`${item.sp}-${l}`] = true;
-              for (let l = 1; l <= item.el; l++)
-                lineMap[`${item.ep}-${l}`] = true;
-            }
-          });
-          mLines = Object.keys(lineMap).length;
-        }
-
-        const mAvg = (mLines / mPresent).toFixed(1);
-
-        // پارے کا درست تعین
-        const targetPara = findCurrentPara(endS, endA);
-
-        const mCrit = criteriaData[targetPara][course + "_para_lines"];
-        let mStatus = "کمزور",
-          mColor = "bg-red-100 text-red-800";
-        if (mAvg >= mCrit.mumtaz) {
-          mStatus = "ممتاز";
-          mColor = "bg-emerald-100 text-emerald-800";
-        } else if (mAvg >= mCrit.behter) {
-          mStatus = "بہتر";
-          mColor = "bg-blue-100 text-blue-800";
-        }
-
-        // --- مجموعی حساب ---
-        const cCrit = criteriaData[targetPara];
-        const behtarMax = cCrit[course + "_total-behtar_days"];
-        const mumtazMax = cCrit[course + "_total-mumtaz_days"];
-
-        let cStatus = "کمزور",
-          cColor = "bg-red-100 text-red-800";
-        if (cDays <= mumtazMax) {
-          cStatus = "ممتاز";
-          cColor = "bg-emerald-100 text-emerald-800";
-        } else if (cDays <= behtarMax) {
-          cStatus = "بہتر";
-          cColor = "bg-blue-100 text-blue-800";
-        }
-
-        // --- ڈسپلے ---
-        document.getElementById("finalReport").classList.remove("hidden");
-        document.getElementById("resMLines").innerText = mLines;
-        document.getElementById("resMAvg").innerText = mAvg;
-        document.getElementById("resMStatus").innerText = mStatus;
-        document.getElementById("resMStatusBox").className =
-          `text-center p-4 rounded-2xl mt-4 ${mColor}`;
-
-        document.getElementById("resCDays").innerText = cDays;
-        document.getElementById("resCReq").innerText = mumtazMax;
-        document.getElementById("resCStatus").innerText = cStatus;
-        document.getElementById("resCStatusBox").className =
-          `text-center p-4 rounded-2xl mt-4 ${cColor}`;
-
-        const name = document.getElementById("studentName").value || "طالب علم";
-        document.getElementById("finalNarrative").innerHTML =
-          `<b>${name}</b> کی ماہانہ کارکردگی <b>${mStatus}</b> رہی جبکہ مجموعی طور پر کورس کا معیار <b>${cStatus}</b> پایا گیا۔ (پارہ نمبر: ${targetPara})`;
-
-        window.scrollTo({
-          top: document.body.scrollHeight,
-          behavior: "smooth",
-        });
-      }
-    </script>
-  </body>
 </html>
